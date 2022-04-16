@@ -12,7 +12,7 @@
 
 ## Courses
 
-- [ ] 0. Introduction
+- [x] 0. Introduction
 - [ ] 1. Chat with Websockets
 - [ ] 2. SocketIO
 - [ ] 3. Video call
