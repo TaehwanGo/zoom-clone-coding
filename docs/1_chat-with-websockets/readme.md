@@ -109,3 +109,8 @@ const socket = new WebSocket(`ws://${window.location.host}`);
     - `<Buffer 48 65 6c 6c 6f 20 66 72 6f 6d 20 74 68 65 20 62 72 6f 77 73 65 72 21>` 로 나옴
     - `message.toString("utf-8")` UTF-8로 디코드 해주면 정상적으로 출력 됨
       - ws 라이브러리 버전이 올라가면서 WebSocketServer객체를 wss생성자로 사용하면서 달라진 부분인 것 같다
+
+## 1.5 Recap
+
+- 프론트와 백엔드에서 웹소켓 세팅을 하고 이벤트를 간단히 전달하고 받아봄
+- websocket을 이용하면 서버에서 먼저 메세지를 보낼 수 있음

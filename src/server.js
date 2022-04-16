@@ -20,6 +20,9 @@ const server = http.createServer(app); // http server
 // 웹소켓 서버를 http서버 위에 생성한 상태
 const wss = new WebSocketServer({ server }); // http서버, web socket서버 둘다 돌릴 수 있음 - 3000번 포트
 
+/**
+ * websocket에서 발생한 이벤트를 observe하려면 on connection에서 이벤트 리스너(socket.on('event', fb))를 등록해줘야 됨
+ */
 wss.on("connection", (socket) => {
   console.log("Connected to Browser ✅");
   socket.send("Tony ! hello WebSocket !");
