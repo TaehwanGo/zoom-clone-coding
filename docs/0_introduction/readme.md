@@ -44,3 +44,13 @@ express 서버 설정(포트 등) 후 실행
   - 기본적인 HTML tag를 이쁘게 바꿔줌
 
 ## 0.4 Recap
+
+- Nodemon
+
+  - 프로젝트를 watching하면서 변경사항이 있을 시 서버를 재시작해주는 프로그램
+    - nodemon.json에서 babel-node를 실행하게 설정
+      - 작성한 코드를 일반 js코드로 컴파일
+      - src/server.js에 해당
+
+- babel-node에 의해 babel이 실행되면 babel.config.json에 있는 설정을 따름
+  - preset : 적용되어야 하는 preset
