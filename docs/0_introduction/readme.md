@@ -29,6 +29,18 @@ express 서버 설정(포트 등) 후 실행
 
 `npm run dev`
 
-## 0.3 Fronted Setup
+## 0.3 Frontend Setup
+
+- server side rendering으로 view를 구성하고
+
+  - view template으로 pug를 사용
+
+- nodemon이 저장할 때 마다 재시작하는 것이 아닌
+
+  - views, server를 수정할 때 재시작하게 하고 싶은 경우
+  - nodemon.json에 ignore 설정
+
+- MVP.css 라이브러리를 cdn에서 가져와서 사용
+  - 기본적인 HTML tag를 이쁘게 바꿔줌
 
 ## 0.4 Recap
