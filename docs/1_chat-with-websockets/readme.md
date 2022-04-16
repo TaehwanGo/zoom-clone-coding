@@ -50,3 +50,49 @@
 - ws서버를 직접만들진 않고 express서버에 합쳐서 사용할 예정
 
 express는 ws를 지원하지 않으므로 node.js에 있는 http package를 사용
+
+## 1.3 WebSocket Events
+
+- https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/WebSocket
+
+```js
+new WebSocket(url);
+new WebSocket(url, protocols);
+```
+
+- 브라우저에서 Web API로 WebSocket 연결을 도와주는 메서드를 제공함
+  - 프론트엔드에선 따로 웹소켓 관련해서 뭘 설치하지 않아도 됨
+  - addEventListener같이 event를 설정 후 callback function을 전달해주면 됨
+
+#### 서버 설정
+
+```js
+import http from "http";
+import express from "express";
+import WebSocket, { WebSocketServer } from "ws";
+
+const app = express();
+const server = http.createServer(app);
+const wss = new WebSocketServer({ server });
+
+function handleConnection(socket) {
+  console.log(socket);
+}
+
+wss.on("connection", handleConnection);
+
+server.listen(3000, handleListen);
+```
+
+#### 프론트 설정
+
+- 서버에서 설정을 해서 웹소켓을 열어놓았다면 프론트에선 연결하기 위해 Web API를 사용해야한다
+
+```js
+const socket = new WebSocket("http://localhost:3000");
+// Uncaught DOMException: Failed to construct 'WebSocket': The URL's scheme must be either 'ws' or 'wss'. 'http' is not allowed.
+
+// http가 아닌 ws 프로토콜을 이용하도록함
+// base URL을 window.location.host로 자동으로 찾게 함
+const socket = new WebSocket(`ws://${window.location.host}`);
+```
