@@ -21,14 +21,21 @@ const server = http.createServer(app); // http server
 const wss = new WebSocketServer({ server }); // http서버, web socket서버 둘다 돌릴 수 있음 - 3000번 포트
 
 /**
+ * fake DB
+ * 연결된 커넥션을 모아놓을 곳
+ * 사용자들이 연결될 때 마다 연결된 socket 인스턴스들이 여기에 저장됨
+ */
+const sockets = [];
+
+/**
  * websocket에서 발생한 이벤트를 observe하려면 on connection에서 이벤트 리스너(socket.on('event', fb))를 등록해줘야 됨
  */
 wss.on("connection", (socket) => {
   console.log("Connected to Browser ✅");
-  socket.send("Tony ! hello WebSocket !");
+  sockets.push(socket);
   socket.on("close", () => console.log("Disconnected from the Browser ❌"));
   socket.on("message", (message) => {
-    console.log(message.toString("utf-8"));
+    sockets.forEach((aSocket) => aSocket.send(message.toString("utf-8")));
   });
 });
 
