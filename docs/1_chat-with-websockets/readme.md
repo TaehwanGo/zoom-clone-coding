@@ -31,3 +31,22 @@
 
 - 자세히 알아보기
   - https://blog.scaleway.com/iot-hub-what-use-case-for-websockets/
+
+## 1.2 WebSockets in NodeJS
+
+- 웹소켓 프로토콜을 앱에서 사용하기 위해 `ws` 패키지를 사용
+- 웹소켓 프로토콜을 사용한다는 것의 의미 - websocket implementation
+
+  - 프로토콜(규약)에 맞는 코드를 만들어 실행한다는 의미
+    - ws라이브러리는 웹소켓 프로토콜을 따라 만들고 그것을 쉽게 이용가능하도록 한 것
+
+- 지금 간단히 ws라이브러를 사용해서 무언가를 만들어보고
+- ws를 기반으로한 다른 라이브러리를 나중에 사용
+  - ws를 사용한 framework가 있음
+    - 채팅방 기능이 존재
+
+`npm i ws`
+
+- ws서버를 직접만들진 않고 express서버에 합쳐서 사용할 예정
+
+express는 ws를 지원하지 않으므로 node.js에 있는 http package를 사용
