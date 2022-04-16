@@ -20,10 +20,13 @@ const server = http.createServer(app); // http server
 // 웹소켓 서버를 http서버 위에 생성한 상태
 const wss = new WebSocketServer({ server }); // http서버, web socket서버 둘다 돌릴 수 있음 - 3000번 포트
 
-function handleConnection(socket) {
-  console.log(socket);
-}
-
-wss.on("connection", handleConnection);
+wss.on("connection", (socket) => {
+  console.log("Connected to Browser ✅");
+  socket.send("Tony ! hello WebSocket !");
+  socket.on("close", () => console.log("Disconnected from the Browser ❌"));
+  socket.on("message", (message) => {
+    console.log(message.toString("utf-8"));
+  });
+});
 
 server.listen(3000, handleListen);

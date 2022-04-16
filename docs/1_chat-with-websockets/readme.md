@@ -96,3 +96,16 @@ const socket = new WebSocket("http://localhost:3000");
 // base URL을 window.location.host로 자동으로 찾게 함
 const socket = new WebSocket(`ws://${window.location.host}`);
 ```
+
+## 1.4 WebSocket Messages
+
+- server에서 메세지를 보내고
+- 프론트에서 소켓 인스턴스에 이벤트 리스너를 설정해서 메세지를 받아봄
+
+  - MessageEvent의 data에 서버에서 보낸 메세지가 들어 있음
+
+- 프론트에서 타임아웃을 설정해서 5초뒤 메세지를 보내도록 설정해봄
+  - server에서 메세지를 받을 때
+    - `<Buffer 48 65 6c 6c 6f 20 66 72 6f 6d 20 74 68 65 20 62 72 6f 77 73 65 72 21>` 로 나옴
+    - `message.toString("utf-8")` UTF-8로 디코드 해주면 정상적으로 출력 됨
+      - ws 라이브러리 버전이 올라가면서 WebSocketServer객체를 wss생성자로 사용하면서 달라진 부분인 것 같다
