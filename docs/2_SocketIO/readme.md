@@ -64,3 +64,48 @@ server.listen(3000, handleListen);
 - 브라우저에서 기본으로 제공하는 Web API가 아닌 라이브러리처럼 가져와서 사용
 - window에 io 함수가 추가 됨
   - 백엔드와 웹소켓 통신을 할 수 있도록 도와주는 함수
+
+## 2.2 SocketIO is Amazing
+
+- SocketIO는 이미 room 개념을 가지고 있음
+- socket.emit(event, payload)
+
+  - socket.send와 비슷하지만 기능이 더 많음
+  - 자세한건 공식문서를 읽어봐야 함
+  - event는 프론트와 백에서 원하는 것으로 맞출 수 있음(정해져있지 않음)
+
+- ws는 Javascript Object를 전송할 수 없어서 string으로 바꿔줘야했으나
+  Javascript Object를 전송 가능
+
+```js
+// frontend
+socket.emit(
+  // 1번째 arg : event
+  "enter_room",
+  // 2번째 arg : payload
+  {
+    payload: input.value,
+  },
+  // 3번째 arg : 서버에서 호출하는 function - 프론트에서 백엔드에 함수를 전달
+  () => {
+    console.log("server is done!");
+  }
+);
+```
+
+- 프론트에서 서버로 함수를 전달 가능
+
+```js
+// backend
+wsServer.on("connection", (socket) => {
+  socket.on("enter_room", (msg, done) => {
+    console.log(msg);
+    setTimeout(() => {
+      done();
+    }, 5000);
+  });
+});
+```
+
+- done이 프론트에서 전달받은 함수이다
+  - 프론트에서 실행 됨
