@@ -119,3 +119,24 @@ wsServer.on("connection", (socket) => {
     - 심지어 함수를 넘기고 백엔드에서 그 함수를 실행하게 할 수 있다(실행은 프론트에서 됨)
       - 함수를 넘기고 싶으면 반드시 마지막에 넘겨줘야 함
       - 심지어 백엔드에서 프론트에서 실행되는 함수에 argument를 넘길 수 있다
+
+## 2.4 Rooms
+
+- 서버에서
+  - socket.join("room name") 메서드 사용
+
+```js
+// server.js
+wsServer.on("connection", (socket) => {
+  socket.onAny((event) => {
+    console.log(`Socket Event : ${event}`);
+  });
+  socket.on("enter_room", (roomName, feCB) => {
+    console.log("socket.rooms", socket.rooms); // Set(1) { 'lLbwF3z62hQq6KkqAAAH' }
+    socket.join(roomName);
+    console.log("socket.rooms", socket.rooms); // Set(2) { 'lLbwF3z62hQq6KkqAAAH', 12 }
+    // lLbwF3z62hQq6KkqAAAH 라는 아이디를 가진 방('12')에 연결(join)
+    feCB("hello from the backend");
+  });
+});
+```

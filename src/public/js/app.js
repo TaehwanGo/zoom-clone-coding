@@ -2,27 +2,25 @@ const socket = io(); // html head에 추가한 socket.io.js가 window에 io함�
 
 const welcome = document.getElementById("welcome");
 const form = welcome.querySelector("form");
+const room = document.getElementById("room");
 
-function backendDone(msgFromBackend) {
+room.hidden = true;
+
+let roomName;
+
+function showRoom() {
   // 백엔드에서 프론트에서 실행되는 함수에 argument를 넘길 수 있다
-  console.log(`The backend say: ${msgFromBackend}`);
+  welcome.hidden = true;
+  room.hidden = false;
+  const h3 = room.querySelector("h3");
+  h3.innerText = `Room ${roomName}`;
 }
 
 function handleRoomSubmit(event) {
   event.preventDefault();
   const input = form.querySelector("input");
-  socket.emit(
-    // 1번째 arg : event
-    "enter_room",
-    // 여러개의 arguments를 넘길 수 있다
-    {
-      payload: input.value,
-    },
-    5,
-    "hello",
-    1234,
-    backendDone
-  );
+  socket.emit("enter_room", input.value, showRoom);
+  roomName = input.value;
   input.value = "";
 }
 
