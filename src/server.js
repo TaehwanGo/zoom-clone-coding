@@ -18,11 +18,9 @@ const httpServer = http.createServer(app);
 const wsServer = new Server(httpServer);
 
 wsServer.on("connection", (socket) => {
-  socket.on("enter_room", (msg, done) => {
-    console.log(msg);
-    setTimeout(() => {
-      done();
-    }, 5000);
+  socket.on("enter_room", (msg, a, b, c, feCB) => {
+    console.log(msg, a, b, c);
+    feCB("hello from the backend");
   });
 });
 
