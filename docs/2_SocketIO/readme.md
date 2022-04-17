@@ -167,3 +167,26 @@ io.on("connection", (socket) => {
 - 방에 들어가면 서버에서 welcome 이란 이벤트를 발생 시킴
   - 프론트에서 welcome 이벤트 리스너를 생성
     - 자기자신은 socket.to 메서드에 의한 이벤트를 받지 못함
+
+## 2.6 Room Notification
+
+- 2.5에서 방에 들어가면 알리는 이벤트(welcome)에 someone joined라는 문구가 출력되게 함
+- 이번엔 나갈 때 문구를 만들어보자
+
+  - leave : 나갈 때
+  - disconnecting : 나가진 않았는데 연결이 끊어졌을 때
+
+- 메세지를 보낼 때 어느 방인지 프론트에서 알려줘야 함
+
+```js
+// frontend
+let roomName; // room enter 시 room submit핸들러 함수에 의해 상태를 가지고 있음
+function handleSubmitMessage(event) {
+  event.preventDefault();
+  const input = room.querySelector("input");
+  socket.emit("message_sent", input.value, roomName, () => {
+    addMessage(`You: ${input.value}`);
+    input.value = "";
+  });
+}
+```

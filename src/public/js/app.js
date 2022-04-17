@@ -1,7 +1,8 @@
 const socket = io(); // html head에 추가한 socket.io.js가 window에 io함수를 추가함
 
 const welcome = document.getElementById("welcome");
-const form = welcome.querySelector("form");
+const form = welcome.querySelector("#formEnterRoom");
+const formSendMessage = document.querySelector("#formSendMessage");
 const room = document.getElementById("room");
 
 room.hidden = true;
@@ -30,8 +31,24 @@ function handleRoomSubmit(event) {
   input.value = "";
 }
 
+function handleSubmitMessage(event) {
+  event.preventDefault();
+  const input = room.querySelector("input");
+  socket.emit("message_sent", input.value, roomName, () => {
+    addMessage(`You: ${input.value}`);
+    input.value = "";
+  });
+}
+
 form.addEventListener("submit", handleRoomSubmit);
+formSendMessage.addEventListener("submit", handleSubmitMessage);
 
 socket.on("welcome", () => {
   addMessage("Someone joined!");
 });
+
+socket.on("disconnected", () => {
+  addMessage("Someone has been disconnected");
+});
+
+socket.on("new_message", addMessage);
