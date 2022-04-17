@@ -8,8 +8,14 @@ room.hidden = true;
 
 let roomName;
 
+function addMessage(message) {
+  const ul = room.querySelector("ul");
+  const li = document.createElement("li");
+  li.innerText = message;
+  ul.appendChild(li);
+}
+
 function showRoom() {
-  // 백엔드에서 프론트에서 실행되는 함수에 argument를 넘길 수 있다
   welcome.hidden = true;
   room.hidden = false;
   const h3 = room.querySelector("h3");
@@ -25,3 +31,7 @@ function handleRoomSubmit(event) {
 }
 
 form.addEventListener("submit", handleRoomSubmit);
+
+socket.on("welcome", () => {
+  addMessage("Someone joined!");
+});

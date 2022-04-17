@@ -140,3 +140,30 @@ wsServer.on("connection", (socket) => {
   });
 });
 ```
+
+## 2.5 Room Messages
+
+- https://socket.io/docs/v4/server-api/#sockettoroom
+
+```js
+io.on("connection", (socket) => {
+  // to one room
+  socket.to("others").emit("an event", { some: "data" });
+
+  // to multiple rooms
+  socket.to("room1").to("room2").emit("hello");
+
+  // or with an array
+  socket.to(["room1", "room2"]).emit("hello");
+
+  // a private message to another socket
+  socket.to(/* another socket id */).emit("hey");
+
+  // WARNING: `socket.to(socket.id).emit()` will NOT work, as it will send to everyone in the room
+  // named `socket.id` but the sender. Please use the classic `socket.emit()` instead.
+});
+```
+
+- 방에 들어가면 서버에서 welcome 이란 이벤트를 발생 시킴
+  - 프론트에서 welcome 이벤트 리스너를 생성
+    - 자기자신은 socket.to 메서드에 의한 이벤트를 받지 못함
