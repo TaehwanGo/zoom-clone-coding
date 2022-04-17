@@ -126,3 +126,37 @@ const socket = new WebSocket(`ws://${window.location.host}`);
 
 - 채팅이 보여지려면 연결된 모든 사람한테 메세지를 줘야됨
   - 임시 DB로 array를 만들어서 그 안에 연결된 모든 유저들에게 메세지를 보내서 채팅이 가능하게 함
+
+## 1.7 ~ 1.8 Nicknames
+
+- append vs. appendChild
+
+  - append
+    - `(method) ParentNode.append(...nodes: (string | Node)[]): void`
+    - string 또는 Node를 하나 또는 여러개 받을 수 있다
+    - return값 없음
+  - appendChild
+    - `(method) Node.appendChild<HTMLLIElement>(node: HTMLLIElement): HTMLLIElement`
+    - HTMLLIElement 만 그리고 하나만 받을 수 있다
+    - return : 새로 추가하려는 전달한 HTMLLIElement이 리턴 됨
+  - 참고 : https://webruden.tistory.com/634
+
+- message 구분
+  - 닉네임을 위한 메세지와 채팅을 위한 메세지를 구분
+  - 이전에 text만 보냈지만 구분을 위해 json으로 type 속성을 추가해서 보냄
+
+```js
+{
+  type: "new_message",
+  payload: "hello! someone"
+}
+
+{
+  type: "nickname",
+  payload: "Tony"
+}
+```
+
+- 주고 받는 데이터
+  - front에서 메세지를 보낼 때 javascript object를 보내는 대신 JSON.stringify 로 보냄
+  - back에선 stringify된 것을 받아서 JSON으로 parsing하고 타입과 메세지를 추출해서 메세지를 보냄
