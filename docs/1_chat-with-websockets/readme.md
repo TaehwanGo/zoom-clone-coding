@@ -160,3 +160,18 @@ const socket = new WebSocket(`ws://${window.location.host}`);
 - 주고 받는 데이터
   - front에서 메세지를 보낼 때 javascript object를 보내는 대신 JSON.stringify 로 보냄
   - back에선 stringify된 것을 받아서 JSON으로 parsing하고 타입과 메세지를 추출해서 메세지를 보냄
+
+## 1.9 Conclusion
+
+### 이슈 1. 내가 보낸 메세지는 내가 받지 않게 할 수도 있다.
+
+- 내가 보낸 메세지는 보낸 즉시 채팅 리스트에 추가
+- 내가 보낸 메세지는 서버에서 나를 제외한 나머지 사람한테 전송
+
+### 이슈 2. 프론트에서 Text형식의 메세지만 받고 있다
+
+- 백엔드에서 JSON 같이 여러 데이터를 포함한 메세지를 보내는 것에 대한 대비가 안되어 있다
+
+### 이슈 3. 누군가 나갔을 때 sockets에서 제거해야 한다
+
+- 위와 같은 이슈들을 쉽게 다룰 수 있는 socket framework에 대해 알아보자 => 2.0
